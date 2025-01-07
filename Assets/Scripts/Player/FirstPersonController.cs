@@ -1,19 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class FirstPersonController : MonoBehaviour
 {
-    private bool _isSprinting;
-
     [Header("Input")]
     [HideInInspector] public Vector2 mouseVector;
     private PlayerInputActions _playerInputActions;
-    private Vector2 _currentInput;
     
     [Header("Movement Parameters")]
     [SerializeField] private float walkSpeed = 5.0f;
     [SerializeField] private float sprintSpeed = 8.0f;
+    private bool _isSprinting;
     private CharacterController _characterController;
     private Vector3 _moveDirection;
 
@@ -24,33 +21,31 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float verticalSpeed = 10f;
     private Camera _playerCamera;
     private float _rotationX = 0;
-
-    // -=[ Default gravitational pull and jump height ]=-
+    
     [Header("Jumping Parameters")]
-    [SerializeField] private float jumpForce = 8.0f;  // Default force to apply when jumping
-    [SerializeField] private float gravity = 30.0f;  // Default gravity value
+    [SerializeField] private float jumpForce = 8.0f;
+    [SerializeField] private float gravity = 30.0f;
     
     public static FirstPersonController Instance;
 
     private void OnEnable()
     {
-        Cursor.lockState = CursorLockMode.Locked;  // Lock the cursor to the screen
-        Cursor.visible = false;  // Disable view of cursor on screen
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false; 
     }
 
     private void Awake()
     {
-        // Make sure only one of this script is active in the scene at a time 
         if (Instance !=  null && Instance != this) Destroy(gameObject);
         else Instance = this;
     }
 
     private void Start()
     {
-        _playerCamera = Camera.main;  // Set player camera variable to the camera
-        _characterController = GetComponent<CharacterController>();  // Set character controller variable to the character controller
+        _playerCamera = Camera.main;  
+        _characterController = GetComponent<CharacterController>();  
 
-        _playerInputActions = PlayerInputManager.Instance.PlayerInputActions; // Get the player input actions
+        _playerInputActions = PlayerInputManager.Instance.PlayerInputActions; 
     }
 
     private void Update()
@@ -58,7 +53,6 @@ public class FirstPersonController : MonoBehaviour
         HandleMovement();
         HandleMouseLook();
 
-        // Call function to apply the movements made in that frame
         ApplyFinalMovements();
     }
 

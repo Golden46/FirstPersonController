@@ -11,9 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (Instance !=  null && Instance != this) Destroy(this);
         else Instance = this;
-        
-        DontDestroyOnLoad(this);
-        
+
         PlayerInputActions ??= new PlayerInputActions();
     }
 
@@ -33,6 +31,5 @@ public class PlayerInputManager : MonoBehaviour
         PlayerInputActions.Player.Jump.performed -= _fpc.HandleJump;
         PlayerInputActions.Player.Sprint.performed -= _fpc.HandleSprint;
         PlayerInputActions.Player.Sprint.canceled -= _fpc.HandleSprint;
-
     }
 }
