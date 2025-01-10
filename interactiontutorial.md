@@ -136,4 +136,12 @@ public void HandleInteractionInput(InputAction.CallbackContext context)
 ```
 - This function is called whenever the `interaction` key is pressed. It won't work yet, you will also need to follow the next step as well.
 - If there is a `_currentInteractable` being looked at and the raycast is still hitting a valid object then call the `OnInteract` function on the object.
-- The reason we check with another raycast is just incase the player looks away and `_currentInteractable` doesn't update or update in time and the player is able to interact with the object while not looking at it. 
+- The reason we check with another raycast is just incase the player looks away and `_currentInteractable` doesn't update or update in time and the player is able to interact with the object while not looking at it.
+
+## Final setup.
+
+- In the `OnEnable` function on the script wherever you subscribe the player actions to the functions. You should include the following.
+```cs
+PlayerInputActions.Player.Interact.performed += _fpc.HandleInteractionInput;
+```
+- This code is based on the way I have my first person controller set up. So depending on how you have done yours you may need to slightly alter it. Also, remember you need to unsubscribe in the `OnDisable` function to prevent any unwanted errors.
